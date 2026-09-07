@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Application to Be My Boyfriend</title>
+<style>
+  :root {
+    --pink-deep: #d6336c;
+    --pink-mid: #ff6f9c;
+    --pink-soft: #ffd1e0;
+    --pink-pale: #fff0f5;
+    --cream: #fffafb;
+    --ink: #3d1f2b;
+    --gold: #f4a6c1;
+    --line: #f3b6cf;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Quicksand', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', script;
+    background: linear-gradient(180deg, var(--pink-pale) 0%, var(--cream) 40%);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Baloo+2:wght@600;700;800&display=swap');
+
+  .hero {
+    position: relative;
+    padding: 64px 24px 48px;
+    text-align: center;
+    background: radial-gradient(circle at 30% 20%, var(--pink-soft), transparent 60%),
+                radial-gradient(circle at 80% 10%, var(--gold), transparent 55%);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "♥";
+    position: absolute;
+    top: -40px;
+    left: 8%;
+    font-size: 140px;
+    color: var(--pink-soft);
+    opacity: 0.5;
+    transform: rotate(-15deg);
+  }
+
+  .hero::after {
+    content: "♥";
+    position: absolute;
+    bottom: -60px;
+    right: 6%;
+    font-size: 180px;
+    color: var(--pink-soft);
+    opacity: 0.4;
+    transform: rotate(20deg);
+  }
+
+  .eyebrow {
+    display: inline-block;
+    background: var(--pink-deep);
+    color: white;
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Baloo 2', 'Quicksand', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 6vw, 52px);
+    margin: 0 0 12px;
+    color: var(--pink-deep);
+    position: relative;
+    z-index: 1;
+  }
+
+  .subtitle {
+    max-width: 480px;
+    margin: 0 auto;
+    color: #8c5069;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+
+  .meta-card {
+    max-width: 560px;
+    margin: 28px auto 0;
+    background: white;
+    border: 2px solid var(--line);
+    border-radius: 20px;
+    padding: 18px 24px;
+    font-size: 14px;
+    color: #a45071;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 8px 24px rgba(214, 51, 108, 0.08);
+  }
+
+  .meta-card div { margin: 4px 0; }
+  .meta-card strong { color: var(--pink-deep); }
+
+  form {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px 100px;
+  }
+
+  .section {
+    background: white;
+    border-radius: 24px;
+    padding: 32px 28px;
+    margin-bottom: 24px;
+    border: 2px solid var(--line);
+    box-shadow: 0 10px 30px rgba(214, 51, 108, 0.06);
+  }
+
+  .section-title {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    color: var(--pink-deep);
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .icon {
+    font-size: 20px;
+  }
+
+  .section-sub {
+    font-size: 13.5px;
+    color: #b06084;
+    margin: 0 0 22px;
+  }
+
+  .field {
+    margin-bottom: 20px;
+  }
+
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 14.5px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    border: 2px solid var(--pink-soft);
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 14.5px;
+    color: var(--ink);
+    background: var(--pink-pale);
+    transition: border-color 0.15s ease, background 0.15s ease;
+    resize: vertical;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--pink-deep);
+    background: white;
+  }
+
+  textarea { min-height: 70px; }
+
+  .rating-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .rating-row:last-child { margin-bottom: 0; }
+
+  .rating-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    flex-shrink: 0;
+    width: 130px;
+  }
+
+  .hearts {
+    display: flex;
+    gap: 4px;
+  }
+
+  .heart-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--pink-soft);
+    padding: 2px;
+    line-height: 1;
+    transition: transform 0.1s ease;
+  }
+
+  .heart-btn:hover { transform: scale(1.15); }
+  .heart-btn.filled { color: var(--pink-deep); }
+
+  .choice-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .choice {
+    position: relative;
+  }
+
+  .choice input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .choice span {
+    display: inline-block;
+    padding: 9px 16px;
+    border: 2px solid var(--pink-soft);
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #a45071;
+    background: var(--pink-pale);
+    transition: all 0.15s ease;
+  }
+
+  .choice input:checked + span {
+    background: var(--pink-deep);
+    border-color: var(--pink-deep);
+    color: white;
+  }
+
+  .final-question {
+    background: linear-gradient(135deg, var(--pink-deep), #b8265a);
+    color: white;
+    border-radius: 24px;
+    padding: 32px 28px;
+    margin-bottom: 24px;
+  }
+
+  .final-question .section-title { color: white; }
+  .final-question .section-sub { color: var(--pink-soft); }
+  .final-question label { color: white; }
+  .final-question textarea {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.4);
+    color: white;
+  }
+  .final-question textarea::placeholder { color: rgba(255,255,255,0.6); }
+  .final-question textarea:focus {
+    background: rgba(255,255,255,0.25);
+    border-color: white;
+  }
+
+  .submit-wrap {
+    text-align: center;
+    margin-top: 32px;
+  }
+
+  .submit-btn {
+    background: var(--pink-deep);
+    color: white;
+    border: none;
+    padding: 16px 44px;
+    border-radius: 999px;
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(214, 51, 108, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(214, 51, 108, 0.4);
+  }
+
+  .submit-note {
+    font-size: 13px;
+    color: #b06084;
+    margin-top: 12px;
+  }
+
+  .signature-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .signature-row .field { flex: 1; min-width: 160px; }
+
+  /* Confirmation overlay */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(61, 31, 43, 0.55);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 100;
+  }
+
+  .overlay.show { display: flex; }
+
+  .overlay-card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px 32px;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .overlay-card .big-heart {
+    font-size: 48px;
+    color: var(--pink-deep);
+    margin-bottom: 12px;
+  }
+
+  .overlay-card h2 {
+    font-family: 'Baloo 2', sans-serif;
+    color: var(--pink-deep);
+    margin: 0 0 10px;
+  }
+
+  .overlay-card p {
+    color: #8c5069;
+    font-size: 14.5px;
+    margin: 0 0 24px;
+  }
+
+  .overlay-card button {
+    background: var(--pink-deep);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Baloo 2', sans-serif;
+  }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12.5px;
+    color: #c98aa8;
+  }
+
+  @media (max-width: 480px) {
+    .section { padding: 24px 18px; }
+    .rating-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .rating-label { width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="eyebrow">Now Accepting Applications</span>
+  <h1>Application to<br>Be XXX </h1>
+  <p class="subtitle"> Fill this out honestly. There are no wrong answers.</p>
+  <div class="meta-card">
+    <div><strong>Position:</strong> To be determined </div>
+    <div><strong>Department:</strong> My Heart</div>
+    <div><strong>Contract:</strong> Open to long term, negotiable</div>
+    <div><strong>Application fee:</strong> $0</div>
+  </div>
+</div>
+
+<form id="applicationForm">
+
+  <div class="section">
+    <h2 class="section-title">The Basics</h2>
+    <p class="section-sub">Just so I have it in writing.</p>
+    <div class="field">
+      <label for="name">Full name</label>
+      <input type="text" id="name" placeholder="Brian ___________">
+    </div>
+    <div class="field">
+      <label for="age">Age</label>
+      <input type="text" id="age" placeholder="Your age">
+    </div>
+    <div class="field">
+      <label for="occupation">What do you do?</label>
+      <input type="text" id="occupation" placeholder="Job">
+    </div>
+    <div class="field">
+      <label>Where do you see yourself living in 5 years?</label>
+      <input type="text" placeholder="City, vibe, dream setup">
+    </div>
+    <div class="field">
+       <label for="school">where did you go to uni </label>
+       <input type="text" placeholder="school">
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Getting To Know You</h2>
+    <p class="section-sub">The fun stuff.</p>
+    <div class="field">
+      <label>What's something you're weirdly good at?</label>
+      <textarea placeholder="Doesn't have to be impressive, just true"></textarea>
+    </div>
+    <div class="field">
+      <label>What annoys you the most?</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>What's a small thing that makes you really happy?</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>What's something you're currently really into?</label>
+      <textarea placeholder="Hobby, show, obsession, rabbit hole"></textarea>
+    </div>
+    <div class="field">
+      <label>What's a value or belief you won't budge on?</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>What's something you're proud of that most people don't know?</label>
+      <textarea></textarea>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Communication & Feelings</h2>
+    <p class="section-sub">How we'll actually talk to each other.</p>
+    <div class="field">
+      <label>When you're upset with someone, what do you usually do?</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>How do you like to be comforted when you're having a rough day?</label>
+      <div class="choice-group">
+        <label class="choice"><input type="radio" name="comfort"><span>Talk it out</span></label>
+        <label class="choice"><input type="radio" name="comfort"><span>Just sit with me</span></label>
+        <label class="choice"><input type="radio" name="comfort"><span>Distract me</span></label>
+        <label class="choice"><input type="radio" name="comfort"><span>Give me space first</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>What's your love language?</label>
+      <div class="choice-group">
+        <label class="choice"><input type="radio" name="lovelang"><span>Words of affirmation</span></label>
+        <label class="choice"><input type="radio" name="lovelang"><span>Quality time</span></label>
+        <label class="choice"><input type="radio" name="lovelang"><span>Physical touch</span></label>
+        <label class="choice"><input type="radio" name="lovelang"><span>Acts of service</span></label>
+        <label class="choice"><input type="radio" name="lovelang"><span>Gifts</span></label>
+        <label class="choice"><input type="radio" name="lovelang"><span>All of the above</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>How do you handle disagreements?</label>
+      <textarea></textarea>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Self Rating</h2>
+    <p class="section-sub">Tap the hearts, no false modesty.</p>
+    <div class="rating-row"><span class="rating-label">Communication</span><div class="hearts" data-rating></div></div>
+    <div class="rating-row"><span class="rating-label">Loyalty</span><div class="hearts" data-rating></div></div>
+    <div class="rating-row"><span class="rating-label">Affection</span><div class="hearts" data-rating></div></div>
+    <div class="rating-row"><span class="rating-label">Sense of humor</span><div class="hearts" data-rating></div></div>
+    <div class="rating-row"><span class="rating-label">Patience</span><div class="hearts" data-rating></div></div>
+    <div class="rating-row"><span class="rating-label">Emotional support</span><div class="hearts" data-rating></div></div>
+    <div class="rating-row"><span class="rating-label">Planning dates</span><div class="hearts" data-rating></div></div>
+    <div class="rating-row"><span class="rating-label">sex           </span><div class="hearts" data-rating></div></div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Dates & Us</h2>
+    <p class="section-sub">Setting expectations early.</p>
+    <div class="field">
+      <label>What's your idea of a perfect date?</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>How do you feel about paying for dates?</label>
+      <div class="choice-group">
+        <label class="choice"><input type="radio" name="paying"><span>I don't mind</span></label>
+        <label class="choice"><input type="radio" name="paying"><span>We take turns</span></label>
+        <label class="choice"><input type="radio" name="paying"><span>50/50 always</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>If I'm having a terrible day, how would you make it better?</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>How often do you like communicating with your partner?</label>
+      <div class="choice-group">
+        <label class="choice"><input type="radio" name="comm-freq"><span>All day</span></label>
+        <label class="choice"><input type="radio" name="comm-freq"><span>Morning & evening check-ins</span></label>
+        <label class="choice"><input type="radio" name="comm-freq"><span>Whenever, no pressure</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Intentions</h2>
+    <p class="section-sub">Where your head's at.</p>
+    <div class="field">
+      <label>Why are you applying for this position?</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>What are you looking for?</label>
+      <div class="choice-group">
+        <label class="choice"><input type="radio" name="looking"><span>Serious relationship</span></label>
+        <label class="choice"><input type="radio" name="looking"><span>Getting to know someone first</span></label>
+        <label class="choice"><input type="radio" name="looking"><span>I just think you're cool</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>What does commitment mean to you?</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>What's one thing you can promise me?</label>
+      <textarea></textarea>
+    </div>
+  </div>
+
+  <div class="final-question">
+    <h2 class="section-title">The Final Question</h2>
+    <p class="section-sub">Take your time with this one.</p>
+    <div class="field">
+      <label>If we do this, what can I expect from you? How will you make me feel safe, loved, and appreciated?</label>
+      <textarea placeholder="This one's for you to fill in, Brian" rows="4"></textarea>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Sign Here</h2>
+    <p class="section-sub">Make it official.</p>
+    <div class="signature-row">
+      <div class="field">
+        <label>Applicant signature</label>
+        <input type="text" placeholder="Type your name">
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input type="text" placeholder="MM/DD/YYYY">
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <button type="submit" class="submit-btn">Submit Application</button>
+    <p class="submit-note">Approval rating: currently 100% based on you just getting this far.</p>
+  </div>
+</form>
+
+<footer>Made with love, mild scheming, and zero red flags detected so far.</footer>
+
+<div class="overlay" id="overlay">
+  <div class="overlay-card">
+    <div class="big-heart">&hearts;</div>
+    <h2>Application Received!</h2>
+    <p>Congrats, Brian. You've officially been shortlisted. Now go tell her you filled this out.</p>
+    <button onclick="document.getElementById('overlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('[data-rating]').forEach(container => {
+    for (let i = 1; i <= 10; i++) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'heart-btn';
+      btn.innerHTML = '♥';
+      btn.dataset.value = i;
+      btn.addEventListener('click', () => {
+        const hearts = container.querySelectorAll('.heart-btn');
+        hearts.forEach((h, idx) => {
+          h.classList.toggle('filled', idx < i);
+        });
+      });
+      container.appendChild(btn);
+    }
+  });
+
+  document.getElementById('applicationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('overlay').classList.add('show');
+  });
+</script>
+
+</body>
+</html>
